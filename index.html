@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demande support Bureautique</title>
+
+    <style>
+        body {
+            font-family: Helvetica, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            text-align: left;
+            color: #10218B;
+			font-weight: bold
+        }
+
+        h2 {
+            margin-top: 30px;
+            color: #555;
+            padding-bottom: 5px;
+			text-align: center;
+			
+        }
+		
+		h3 {
+			text-decoration: underline
+		}
+
+        form {
+            background-color: #fff;
+            padding: 18px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        label {
+            margin-bottom: 15px;
+         }
+
+         textarea {
+            font-family: Helvetica, sans-serif;
+         }
+
+        input, select, textarea {
+            width: 98%;
+            padding: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="radio"] {
+            width: auto;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button:disabled { /* Desactive le bouton */
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+.hidden { display: none; }
+
+.header {
+    display: flex;
+    justify-content: space-between; /* gauche ↔ droite */
+    align-items: flex-start;
+    padding: 20px;
+}
+
+/* Logo de gauche */
+.logo-gauche {
+    width: 250px; /* adapte si tu veux */
+}
+
+/* Conteneur des logos à droite */
+.logos-droite {
+    display: flex;
+    flex-direction: column; /* l’un sous l’autre */
+    align-items: flex-end;  /* alignement à droite */
+    gap: 10px;              /* espace entre les deux */
+}
+
+/* Logos à droite */
+.logo2 {
+    padding-top: 30px; /* pour les éloigner du logo du haut, ajuste si besoin */
+    width: 120px;
+    margin-right: 12px; /* pour les éloigner du logo de gauche, ajuste si besoin */
+}
+
+
+
+
+        .radio-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            /*margin-bottom: 10px;*/
+        }
+
+        .hidden {
+            display: none;
+        }
+		
+		  /* Ajout d'une ligne avec plusieurs champs côte à côte */
+        .form-row {
+            display: flex;
+            gap: 10px; /* Espacement entre les champs */
+            align-items: center;
+        }
+
+        /* Styles spécifiques pour les champs sur la même ligne */
+        #civilite {
+            flex: 0 0 80px; /* Largeur fixe pour Civilité */
+        }
+
+        #nom, #prenom {
+            flex: 1; /* Prend l'espace restant de manière égale */
+        }
+
+        /* Style spécifique pour réduire la taille d'un champ */
+        .small-input {
+            width: 110px; /* Taille personnalisée pour ce champ */
+            font-family: Helvetica;
+
+        }
+
+        /* Style spécifique pour réduire la taille du champ n° de série */
+        .small-serie {
+            width: 100px; /* Taille personnalisée pour ce champ */
+        }
+
+        /* Style spécifique pour réduire la taille d'un champ */
+        .small-dategar {
+            width: 110px; /* Taille personnalisée pour ce champ */
+            font-family: Helvetica;
+        }
+
+         /* Style pour le lien */
+         .info-link {
+            margin-left: 10px;
+            margin-bottom: 15px;
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        .info-link:hover {
+            text-decoration: underline;
+        }
+        .mess-garantie-normal {
+            /*color: #10ec6c;*/
+            font-size: 12px ;
+        }
+        .mess-garantie-email {
+            font-size: 12px;
+            color: #007BFF;
+        }
+
+        .mess-rgpd-normal {
+            /*color: #10ec6c;*/
+            font-size: 12px ;
+        }
+        .mess-rgpd-email {
+            font-size: 12px;
+            color: #007BFF;
+        }
+
+        .line {
+            height: 2px; /* Épaisseur de la ligne */
+            background-color: #007BFF; /* Couleur de la ligne */
+            margin: 20px 0; /* Espacement vertical */
+            width: 100%; /* Prend toute la largeur */
+        }
+         /* Style spécifique pour réduire la taille d'un champ */
+        .small-codepost {
+            width: 50px; /* Taille personnalisée pour ce champ */
+        }
+
+        /* Style spécifique pour réduire la taille du champ tel d'inter */
+        .small-tel {
+            width: 100px; /* Taille personnalisée pour ce champ */
+        }
+
+        .small-firm {
+            width: 100px; /* Taille personnalisée pour ce champ */
+        }
+
+        .checkbox-label {
+            display: flex; /* Aligne la case et le texte sur la même ligne */
+            align-items: center; /* Centre verticalement */
+            gap: 8px; /* Ajoute un espace entre la case et le texte */
+        }
+        .checkbox-label input {
+            width: auto; /* Supprime l'effet de largeur forcée */
+        }
+    </style>
+
+    <script>
+  function getSelectedRadioValue(name) {
+    const radios = document.getElementsByName(name);
+    for (let i = 0; i < radios.length; i++) {
+      if (radios[i].checked) return radios[i].value;
+    }
+    return null;
+  }
+
+  function getMultiSelectValues(selectEl) {
+    return Array.from(selectEl.selectedOptions).map(o => o.value || o.text);
+  }
+
+  function openEmail(event) {
+    event.preventDefault();
+
+    const categorie = document.getElementById('categorie_demande').value; // incident | conso
+    if (!categorie) {
+      alert("Veuillez sélectionner une catégorie de demande.");
+      return;
+    }
+
+    // redirection mail selon catégorie
+    const email = (categorie === 'conso')
+      ? "informatique@options.net"
+      : "informatique@options.net";
+
+    const pcsValue = getSelectedRadioValue('pcs');
+    const errValue = getSelectedRadioValue('erreur');
+
+    // Validation "message d'erreur"
+if (errValue === "Oui") {
+  const errTxt = document.getElementById('erreur_entry').value.trim();
+  if (!errTxt) {
+    alert("Veuillez préciser le message d'erreur (Lequel ?).");
+    return;
+  }
+}
+
+// Validation "pièces cassées" (si tu as aussi le radio pcs quelque part)
+if (pcsValue === "Oui") {
+  const pcsTxt = document.getElementById('pcs_entry').value.trim();
+  if (!pcsTxt) {
+    alert("Veuillez préciser les pièces cassées (Lesquelles ?).");
+    return;
+  }
+}
+
+    const serial = (document.getElementById('num_serie').value || "").trim();
+    const modele = (document.getElementById('modele').value || "").trim();
+    const societe = (document.getElementById('societe_intervention').value || "").trim();
+
+
+    // Objet demandé :
+const libCategorie = (categorie === 'incident') ? 'Incident' : 'Consommable';
+const sujet = encodeURIComponent(`Formulaire ${libCategorie} / ${societe || "-"} / ${modele || "-"} / ${serial || "-"}`);
+
+    // Type demande selon catégorie
+    let typeDemandeTxt = "";
+
+if (categorie === 'incident') {
+  const typeIncident = document.getElementById('type_incident').value.trim();
+  if (!typeIncident) {
+    alert("Veuillez sélectionner un type de demande (Incident).");
+    return;
+  }
+
+  const incidentPreciser = document.getElementById('incident_preciser').value.trim();
+  const needsPrecise = (typeIncident === "Pièce cassée – A préciser" || typeIncident === "Autre – A préciser");
+  if (needsPrecise && !incidentPreciser) {
+    alert("Veuillez préciser le type d'incident.");
+    return;
+  }
+
+  typeDemandeTxt =
+    `Type demande (Incident) : ${typeIncident}` +
+    (incidentPreciser ? " | Précision : " + incidentPreciser : "");
+
+} else {
+  const selectedConso = getMultiSelectValues(document.getElementById('type_conso'))
+    .filter(v => v && v !== "Sélectionner --");
+
+  if (selectedConso.length === 0) {
+    alert("Veuillez sélectionner au moins un consommable.");
+    return;
+  }
+
+  const consoPreciser = document.getElementById('conso_preciser').value.trim();
+  if (selectedConso.includes("Autre - A préciser") && !consoPreciser) {
+    alert("Veuillez préciser le consommable (Autre).");
+    return;
+  }
+
+  const compteurNoir = document.getElementById('compteur_noir').value.trim();
+  const compteurCouleur = document.getElementById('compteur_couleur').value.trim();
+
+  // Si tu veux les rendre obligatoires en Conso :
+  if (!compteurNoir) {
+    alert("Veuillez renseigner le relevé compteur noir.");
+    return;
+  }
+  if (!compteurCouleur) {
+    alert("Veuillez renseigner le relevé compteur couleur.");
+    return;
+  }
+
+  typeDemandeTxt =
+    `Type demande (Conso) : ${selectedConso.join(", ")}` +
+    (consoPreciser ? " | Précision : " + consoPreciser : "") + "\n" +
+    `Relevé Compteur Noir : ${compteurNoir}\n` +
+    `Relevé Compteur Couleur : ${compteurCouleur}`;
+}
+
+
+    const body = `Bonjour,
+
+Pourriez-vous traiter la demande suivante :
+
+==== Emetteur de la demande ====
+Civilité : ${document.getElementById('civilite').value}
+Nom : ${document.getElementById('nom').value}
+Prénom : ${document.getElementById('prenom').value}
+Société : ${document.getElementById('societe_emetteur').value}
+Adresse : ${document.getElementById('adresse_dem').value}
+Complément : ${document.getElementById('complement_dem').value}
+Code postal : ${document.getElementById('code_postal_dem').value}
+Ville : ${document.getElementById('ville_dem').value}
+Téléphone : ${document.getElementById('tel').value}
+Email : ${document.getElementById('email').value}
+Date de la demande : ${document.getElementById('date_demande').value}
+Réf interne : ${document.getElementById('ref_interne').value}
+N° de série : ${serial}
+Modèle : ${modele}
+
+==== Adresse d'intervention ====
+Société : ${societe}
+Contact : ${document.getElementById('contact').value}
+Adresse : ${document.getElementById('adresse').value}
+Complément : ${document.getElementById('complement').value}
+Code postal : ${document.getElementById('code_postal').value}
+Ville : ${document.getElementById('ville').value}
+Téléphone 1 : ${document.getElementById('tel_intervention').value}
+Téléphone 2 : ${document.getElementById('tel_intervention2').value}
+Email : ${document.getElementById('email_intervention').value}
+
+==== Demande ====
+Catégorie : ${categorie === 'incident' ? "Incident" : "Consommable"}
+${typeDemandeTxt}
+
+Message d'erreur : ${errValue || ""}
+${document.getElementById('erreur_entry').value || ""}
+Description - Précision - Contexte : ${document.getElementById('description').value || ""}
+
+
+Je déclare que les informations renseignées sont exactes.
+
+Cordialement,
+`;
+
+    const mailtoLink = `mailto:${email}?subject=${sujet}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailtoLink;
+  }
+</script>
+
+</head>
+<body>
+ 
+
+    <form onsubmit="openEmail(event)">
+
+        <!--<h1>EPSON</h1>-->
+<div class="header">
+    <!-- Logo gauche -->
+    <img src="https://www.adexgroup.fr/wp-content/uploads/2018/05/logo.png" class="logo-gauche">
+
+    <!-- Logos droite (colonne) -->
+    <div class="logos-droite">
+        <img src="https://res.cloudinary.com/deqidc8iu/image/upload/v1770823067/c243b084-e833-4fbd-9bbd-78ac362dbb73_deut0i.png" class="logo2">
+    </div>
+</div>
+
+
+		<h2>Demande support Bureautique / Options</h2>
+        
+        <h3>Emetteur de la demande</h3>
+        
+        <div class="form-row">
+			<label for="civilite">Civilité:</label>
+			<select id="civilite" name="civilite" required>
+				<option value=""></option>
+				<option value="Monsieur">Mr</option>
+				<option value="Madame">Mme</option>
+			</select>
+            <label for="nom">Nom:</label>
+			<input type="text" id="nom" name="nom" required>
+
+			<label for="prenom">Prénom:</label>
+			<input type="text" id="prenom" name="prenom" required>
+        </div>
+
+        <div class="form-row">
+			<label for="societe_emetteur" style="flex: 0 0 50px;">Société:</label>
+			<input type="text" id="societe_emetteur" name="societe_emetteur" style="flex: 1;" required>
+		</div>
+
+        <!-- New -->
+        
+
+        <div class="form-row">
+            <label for="adresse_dem">Adresse:</label>
+            <input type="text" id="adresse_dem" name="adresse_dem" required>
+        </div>
+
+        <div class="form-row">
+            <label for="complement_dem">Complément:</label>
+            <input type="text" id="complement_dem" name="complement_dem">
+        </div>
+
+        <div class="form-row">
+            <label for="code_postal_dem"style="flex: 0 0 100px;">Code postal:</label>
+            <input type="text" id="code_postal_dem" name="code_postal_dem" class="small-codepost" required>
+
+            <label for="ville_dem">Ville:</label>
+            <input type="text" id="ville_dem" name="ville_dem" required>
+        </div>
+
+        <!-- Fin New -->
+
+        <div class="form-row">
+            <label for="tel">Téléphone:</label>
+            <input type="tel" id="tel" name="tel" maxlength="14" oninput="formatPhoneNumber(this)" class="small-tel" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="form-row">
+            <label for="date_demande"style="flex: 0 0 150px;">Date de la demande:</label>
+            <input type="date" id="date_demande" name="date_demande" class="small-input" required>
+    
+            <label for="ref_interne"style="flex: 0 0 100px;">Réf interne:</label>
+            <input type="text" id="ref_interne" name="ref_interne">
+        </div>
+
+        <div class="form-row">
+            <label for="num_serie" style="flex: 0 0 100px;">N° de série :</label>
+            <!--<input type="text" id="num_serie" name="num_serie" maxlength="10" class="small-serie" onblur="updateModel()" required>  Pour faire apparaitre le modèle en fonction du serial -->
+            <input type="text" id="num_serie" name="num_serie" maxlength="11" class="small-serie">
+        
+            <label for="modele" style="flex: 0 0 70px;">Modèle :</label>
+            <input type="text" id="modele" name="modele">
+        </div>
+
+        
+
+
+        <div class="line"></div>
+
+        <!-- Rubrique Adresse d'intervention -->
+        <h3>Adresse d'intervention</h3>
+
+        <div class="form-row">
+            <label for="societe_intervention">Société:</label>
+            <input type="text" id="societe_intervention" name="societe_intervention" required>
+    
+            <label for="contact">Contact:</label>
+            <input type="text" id="contact" name="contact" required>
+        </div>
+
+        <div class="form-row">
+            <label for="adresse">Adresse:</label>
+            <input type="text" id="adresse" name="adresse" required>
+        </div>
+
+        <div class="form-row">
+            <label for="complement">Complément:</label>
+            <input type="text" id="complement" name="complement">
+        </div>
+
+        <div class="form-row">
+            <label for="code_postal"style="flex: 0 0 100px;">Code postal:</label>
+            <input type="text" id="code_postal" name="code_postal" class="small-codepost" required>
+
+            <label for="ville">Ville:</label>
+            <input type="text" id="ville" name="ville" required>
+        </div>
+
+        <div class="form-row">
+            <label for="tel_intervention">Téléphone1:</label>
+            <input type="tel" id="tel_intervention" name="tel_intervention" maxlength="14" oninput="formatPhoneNumber(this)" class="small-tel" required>
+
+            <label for="tel_intervention2">Téléphone2:</label>
+            <input type="tel" id="tel_intervention2" name="tel_intervention2" maxlength="14" oninput="formatPhoneNumber(this)" class="small-tel">
+
+            <label for="email_intervention">Email:</label>
+            <input type="email" id="email_intervention" name="email_intervention" required>
+        </div>
+
+        <div class="line"></div>
+
+        <!-- Rubrique Description du problème -->
+        <h3>Catégorie de la demande</h3>
+        <select id="categorie_demande" name="categorie_demande" required style="flex: 1;">
+            <option value="">Sélectionner --</option>
+            <option value="incident">Déclaration d'incident</option>
+            <option value="conso">Commande consommable</option>
+        </select>
+
+
+        <!-- TYPE INCIDENT (menu déroulant) -->
+        <div id="bloc_type_incident" class="hidden">
+        <div class="form-row">
+            <label for="type_incident" style="flex: 0 0 170px;"><b>Type demande :</b></label>
+            <select id="type_incident" name="type_incident" style="flex: 1;">
+            <option value="" selected>Sélectionner --</option>
+
+            <option>Incident papier chargeur de document</option>
+            <option>Incident magasin - bac papier</option>
+            <option>Incident finition agrafage/perforation</option>
+            <option>Défaut de qualité impression-copie</option>
+            <option>Défaut de qualité numérisation</option>
+            <option>Bruit – claquement</option>
+            <option>Pièce cassée – A préciser</option>
+            <option>Erreur scan Email</option>
+            <option>Erreur scan autre</option>
+            <option>Incident réseau – impression bloquée</option>
+            <option>Erreur démarrage – écran noir</option>
+            <option>Demande paramétrage – installation – configuration</option>
+            <option>Demande Conseil / Formation</option>
+            <option>Demande administrative</option>
+            <option>Erreur livraison</option>
+            <option>Consommable défectueux – incompatible</option>
+            <option>Défaut de proactivité – agent déconnecté</option>
+            <option>Autre – A préciser</option>
+            </select>
+        </div>
+
+        <input type="text" id="incident_preciser" class="hidden" placeholder="Précisez (si Pièce cassée / Autre) ...">
+        </div>
+
+        <!-- TYPE CONSO (menu déroulant multi-choix) -->
+        <div id="bloc_type_conso" class="hidden">
+        <div class="form-row">
+            <label for="type_conso" style="flex: 0 0 170px;"><b>Type demande :</b></label>
+            <select id="type_conso" name="type_conso" multiple size="7" style="flex: 1;">
+            <option value="" disabled>Sélectionner --</option>
+            <option>Toner - Encre Cyan</option>
+            <option>Toner - Encre Magenta</option>
+            <option>Toner - Encre Jaune</option>
+            <option>Toner - Encre Noir</option>
+            <option>Bac récupérateur - boitier de maintenance – Collecteur encre toner usagé</option>
+            <option>Photorécepteur - Tambour Cyan R2</option>
+            <option>Photorécepteur - Tambour Magenta R3</option>
+            <option>Photorécepteur - Tambour Jaune R4</option>
+            <option>Photorécepteur - Tambour Noir R1</option>
+            <option>Photorécepteur - Tambour Couleur R234</option>
+            <option>Kit module photorécepteur</option>
+            <option>Four</option>
+            <option>Autre - A préciser</option>
+            </select>
+        </div>
+
+        <input type="text" id="conso_preciser" class="hidden" placeholder="Précisez (si Autre) ...">
+
+        <div class="form-row">
+            <label for="compteur_noir" style="flex: 0 0 180px;">Relevé Compteur Noir :</label>
+            <input type="text" id="compteur_noir" name="compteur_noir" style="flex: 1;">
+        </div>
+
+        <div class="form-row">
+            <label for="compteur_couleur" style="flex: 0 0 200px;">Relevé Compteur Couleur :</label>
+            <input type="text" id="compteur_couleur" name="compteur_couleur" style="flex: 1;">
+        </div>
+
+        <div style="font-size: 12px; color:#555; margin-top:-10px; margin-bottom:15px;">
+            Astuce : maintiens Ctrl (Windows) ou Cmd (Mac) pour sélectionner plusieurs consommables.
+        </div>
+        </div>
+    
+        <input type="text" id="pcs_entry" name="pcs_entry" class="hidden" placeholder="Lesquelles ?">
+
+        <div class="form-row">
+            <label>Le produit indique-t-il un message d'erreur:</label>
+            <div class="radio-group">
+                <input type="radio" id="erreur_oui" name="erreur" value="Oui" onclick="toggleField('erreur_entry', true)">
+                <label for="erreur_oui">Oui</label>
+                <input type="radio" id="erreur_non" name="erreur" value="Non" onclick="toggleField('erreur_entry', false)" checked>
+                <label for="erreur_non">Non</label>
+            </div>
+        </div>
+
+        <input type="text" id="erreur_entry" name="erreur_entry" class="hidden" placeholder="Lequel ?">
+
+        <label for="description">Description - Précision - Contexte de la demande :</label>
+        <textarea id="description" name="description" rows="4" required></textarea>
+
+
+
+
+        <!-- Ajout de la case a cocher  -->
+        <div class="checkbox-label">
+            <input type="checkbox" id="declaration" name="declaration">
+            <label for="declaration">Je déclare que les informations renseignées sont exactes.</label>
+        </div>     
+
+        <br>
+
+        <div style="display: flex; align-items: center;">
+            <button id="submitButton" disabled>Soumettre</button>
+            <span id="tooltip" style="display: none; color: blue; margin-left: 10px;">
+                En cliquant sur "Soumettre", votre messagerie va afficher le contenu du formulaire en texte. Vous devrez ensuite l'envoyer.
+            </span>
+        </div>
+    </form>
+
+    <script>
+        function ouvirlien(event) {
+    event.preventDefault(); // Empêche le comportement par défaut du lien
+    const numSerie = document.getElementById('num_serie').value.trim();
+    if (numSerie) {
+        //const url = `https://warrantycheck.epson.eu?serialNumber=${encodeURIComponent(numSerie)}`;
+        const url = `https://warrantycheck.epson.eu?serialNumber=${encodeURIComponent(numSerie)}&Country2code=FR`;
+        window.open(url, '_blank');
+    } else {
+        alert('Veuillez entrer un numéro de série valide.');
+    }
+}
+    </script>
+
+    <script>
+  function setRequired(el, required) {
+    if (!el) return;
+    el.required = required;
+  }
+
+  function refreshCategorieUI() {
+    const cat = document.getElementById('categorie_demande').value;
+
+    const blocIncident = document.getElementById('bloc_type_incident');
+    const blocConso = document.getElementById('bloc_type_conso');
+
+    const typeIncident = document.getElementById('type_incident');
+    const typeConso = document.getElementById('type_conso');
+
+    // reset affichage
+    blocIncident.classList.toggle('hidden', cat !== 'incident');
+    blocConso.classList.toggle('hidden', cat !== 'conso');
+
+    // required uniquement sur le bloc visible
+    setRequired(typeIncident, cat === 'incident');
+    // multi-select: pas de required natif fiable sur certains navigateurs -> on valide dans openEmail()
+
+    // reset "préciser"
+    document.getElementById('incident_preciser').classList.add('hidden');
+    document.getElementById('conso_preciser').classList.add('hidden');
+  }
+
+  function refreshPreciserUI() {
+    const typeIncident = document.getElementById('type_incident').value;
+    const incidentPreciser = document.getElementById('incident_preciser');
+    const showIncidentPreciser = (typeIncident === "Pièce cassée – A préciser" || typeIncident === "Autre – A préciser");
+    incidentPreciser.classList.toggle('hidden', !showIncidentPreciser);
+
+    const consoSelect = document.getElementById('type_conso');
+    const selected = Array.from(consoSelect.selectedOptions).map(o => o.value || o.text);
+    const consoPreciser = document.getElementById('conso_preciser');
+    const showConsoPreciser = selected.includes("Autre - A préciser");
+    consoPreciser.classList.toggle('hidden', !showConsoPreciser);
+  }
+
+  // listeners
+  window.addEventListener('load', () => {
+    const cat = document.getElementById('categorie_demande');
+    const typeIncident = document.getElementById('type_incident');
+    const typeConso = document.getElementById('type_conso');
+
+    cat.addEventListener('change', () => {
+      refreshCategorieUI();
+      refreshPreciserUI();
+    });
+
+    typeIncident.addEventListener('change', refreshPreciserUI);
+    typeConso.addEventListener('change', refreshPreciserUI);
+
+    refreshCategorieUI();
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const cat = document.getElementById('categorie_demande');
+    const blocIncident = document.getElementById('bloc_type_incident');
+    const blocConso = document.getElementById('bloc_type_conso');
+    const typeIncident = document.getElementById('type_incident');
+    const typeConso = document.getElementById('type_conso');
+
+    // Debug rapide : si un élément manque, on le saura
+    if (!cat || !blocIncident || !blocConso || !typeIncident || !typeConso) {
+      console.error("Erreur: un des éléments est introuvable.", {
+        cat, blocIncident, blocConso, typeIncident, typeConso
+      });
+      return;
+    }
+
+    function refreshCategorieUI() {
+      const v = cat.value; // "incident" ou "conso"
+
+      // Affiche/masque
+      blocIncident.classList.toggle('hidden', v !== 'incident');
+      blocConso.classList.toggle('hidden', v !== 'conso');
+
+      // Required uniquement sur incident
+      typeIncident.required = (v === 'incident');
+    }
+
+    cat.addEventListener('change', refreshCategorieUI);
+
+    // état initial
+    refreshCategorieUI();
+  });
+</script>
+
+    <script>
+        // Fonction pour afficher/masquer un champ basé sur une sélection Oui/Non
+        function toggleField(fieldId, show) {
+            const field = document.getElementById(fieldId);
+            field.classList.toggle("hidden", !show);
+        }
+    </script>
+     <script>
+        // Fonction pour formater le numéro de téléphone en temps réel
+        function formatPhoneNumber(input) {
+            // Supprime tous les caractères non numériques
+            let cleaned = input.value.replace(/\D/g, '');
+            
+            // Ajoute des espaces après chaque 2 chiffres
+            let formatted = cleaned.replace(/(\d{2})(?=\d)/g, '$1 ');
+            
+            // Limite à 14 caractères (pour éviter les dépassements)
+            input.value = formatted.trim().slice(0, 14);
+        }
+    </script>
+
+<script>
+    function updateModel() {
+        // Récupère la valeur du champ "N° de série" et extrait les 4 premiers caractères
+        const numSerie = document.getElementById('num_serie').value.toUpperCase();
+        const prefix = numSerie.slice(0, 4);
+
+        // Dictionnaire de correspondance des préfixes aux modèles
+        const modelMapping = {
+            // Ajoutez d'autres correspondances ici
+            // 'ABCD': 'Modèle XYZ',
+            'X2SS': 'WF-C869R',
+            'X74R':' WF-C20600',
+            'X38N':'AL-M320',
+            'RJCQ':'AL-M400DN',
+            'XAUV':'AM-C4000',
+            'XAV6':'AM-C5000',
+            'XAVG':'AM-C6000',
+            'XAYA':'EXPRESSION 13000XL',
+            'SCSY':'WF-5620',
+            'VQJY':'WF-6590',
+            'X59G':'WF-C17590',
+            'X3FW':'WF-C20590',
+            'X754':'WF-C20750',
+            'X75G':'WF-C21000',
+            'X3BX':'WF-C5210',
+            'X57H':'WF-C529R',
+            'X3B3':'WF-C5710',
+            'X3B8':'WF-C5790',
+            'X576':'WF-C579R',
+            'XBK2':'WF-C5890DWF',
+            'XBK3':'WF-C5890DWF',
+            'X5A4':'WF-C8190',
+            'X59R':'WF-C8610',
+            'X59U':'WF-C8690',
+            'X2SS':'WF-C869R',
+            'X3CG':'WF-M5299',
+            'XC7H':'WF-M5399',
+            'X3BL':'WF-M5799',
+            'X6GA':'WF-C878R',
+            'X6GN':'WF-C879R',
+            'X74R':'WF-C20600',
+            'UV4Y':'WF-M5690',
+            'XCUX':'EM-C800R',
+            'X2TH':'WF-3720',
+            'X3Y5':'WF-3725',
+            'X7XT':'WF-3820',
+            'XAU4':'WF-3820',
+            'X7XU':'WF-3825',
+            'XAU5':'WF-3825',
+            'X2TU':'WF-4720',
+            'X2U2':'WF-4740',
+            'X7Y3':'WF-4820',
+            'X7Y5':'WF-4820',
+            'X7Y6':'WF-4825',
+            'X7YD':'WF-4830',
+            'SDLY':'WF-5110',
+            'VQMY':'WF-6090',
+            'TFQY':'WF-8590',
+            'XAY2':'WF-C4810',
+            'X3C4':'WF-C5290',
+            'X57J':'WF-C529R',
+            'XBKF':'WF-C5390',
+            'X6GP':'WF-C879R',
+            'XC8K':'WF-M4619',
+            'UV7Y':'WF-M5190',
+            'XC76':'WF-M5899',
+            'XBRT':'AM-C400',
+            'XBS5':'AM-C550',
+
+        };
+
+        // Détermine le modèle correspondant ou laisse le champ vide si non trouvé
+        const modele = modelMapping[prefix] || '';
+
+        // Met à jour le champ "Modèles" avec le nom du modèle correspondant
+        document.getElementById('modele').value = modele;
+    }
+</script>
+
+<script defer>
+    // Script pour définir la date du jour
+    window.onload = function () {
+        const dateField = document.getElementById("date_demande");
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0'); // Mois au format 2 chiffres
+        const dd = String(today.getDate()).padStart(2, '0'); // Jour au format 2 chiffres
+        dateField.value = `${yyyy}-${mm}-${dd}`;
+    };
+</script>
+
+<script>
+    const checkbox = document.getElementById('declaration');
+    const submitButton = document.querySelector('button');
+    const tooltip = document.getElementById('tooltip');
+
+    // Activer/Désactiver le bouton selon la case cochée
+    checkbox.addEventListener('change', function () {
+        submitButton.disabled = !this.checked;
+    });
+
+    // Afficher le message au survol si le bouton est actif
+    submitButton.addEventListener('mouseover', function () {
+        if (!submitButton.disabled) {
+            tooltip.style.display = 'inline';
+        }
+    });
+
+    // Cacher le message quand la souris quitte le bouton
+    submitButton.addEventListener('mouseout', function () {
+        tooltip.style.display = 'none';
+    });
+
+</script>
+
+
+</body>
+</html>
